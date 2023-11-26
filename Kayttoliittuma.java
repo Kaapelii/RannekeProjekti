@@ -18,7 +18,7 @@ public class Kayttoliittuma extends JFrame{
     JTextArea txt1 = new JTextArea();
     JTextArea txt2 = new JTextArea();               //tekstikentät
 
-    String s1[] = { "Opiskelija", "Eläkeläinen", "Varusmies"};
+    String s1[] = { "Valitse", "Opiskelija", "Eläkeläinen", "Varusmies"};
  
     JComboBox checkbox1 = new JComboBox(s1); //dropdown menu
 
@@ -29,16 +29,23 @@ public class Kayttoliittuma extends JFrame{
 
     JLabel lbl11 = new JLabel("Huoltajan Puhelinnumero");
     JLabel lbl5 = new JLabel("Lapsen etunimi");
-    JLabel lbl6 = new JLabel("Valitse alennusryhmä");
+    JLabel lbl6 = new JLabel("Valitse alennusryhmä:");
     JLabel lbl19 = new JLabel("Ostoskori:");
 
     // Ostoskori tekstilaatikko
-    JTextArea ostoskori = new JTextArea();
-    
+    JTextArea ostoskori = new JTextArea(100,300);
+    ostoskori.setEditable(false);
     int[] normaalimaara = {0};
     int[] lastenmaara = {0};
+    
+    //alennus alustukset
+    int[] opiskelijamaara = {0};
+    int[] elakemaara = {0};
+    int[] monnimaara = {0};
     int[] alennusmaara = {0};
-    ostoskori.append("Ostoskori: \nNormaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus: " + alennusmaara[0] + "\n");
+    alennusmaara[0] = opiskelijamaara[0] + elakemaara[0] + monnimaara[0];
+    
+    ostoskori.append("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
 
     //tyhjät osat täyttämään grid layooutin
     JLabel lbl12 = new JLabel(" ");
@@ -74,7 +81,7 @@ public class Kayttoliittuma extends JFrame{
     panel.add(lbl11);
     panel.add(lbl12);
      
-    panel.add(lbl13);   
+    panel.add(lbl19);    
     panel.add(txt2);
     panel.add(lbl15);
 
@@ -107,7 +114,7 @@ public class Kayttoliittuma extends JFrame{
         // Lisää tuote ostoskoriin
         normaalimaara[0]++;
         //Päivitä tekstialue
-        ostoskori.setText("Ostoskori:\nNormaali: " + normaalimaara[0] + "\nLasten: " + lastenmaara[0] + "\nAlennus: " + alennusmaara[0] + "\n");
+        ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
       }
     });
 
@@ -116,7 +123,7 @@ public class Kayttoliittuma extends JFrame{
       public void actionPerformed(ActionEvent e) {
         
         lastenmaara[0]++;
-        ostoskori.setText("Ostoskori:\nNormaali: " + normaalimaara[0] + "\nLasten: " + lastenmaara[0] + "\nAlennus: " + alennusmaara[0] + "\n");
+        ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
         
       }
     });
@@ -124,9 +131,25 @@ public class Kayttoliittuma extends JFrame{
     btn3.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        
-        alennusmaara[0]++;
-        ostoskori.setText("Ostoskori:\nNormaali: " + normaalimaara[0] + "\nLasten: " + lastenmaara[0] + "\nAlennus: " + alennusmaara[0] + "\n");
+        String valittu = checkbox1.getSelectedItem().toString();
+        if (valittu == "Opiskelija") {
+          alennusmaara[0]++;
+          opiskelijamaara[0]++;
+          ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
+        }
+        else if(valittu == "Eläkeläinen") {
+          alennusmaara[0]++;
+          elakemaara[0]++;
+          ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
+        }
+        else if(valittu == "Varusmies") {
+          alennusmaara[0]++;
+          monnimaara[0]++;
+          ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
+        }
+        else if (valittu == "Valitse") {
+          JOptionPane.showMessageDialog(null, "Valitse alennusryhmä");
+        } 
       }
     });
 
@@ -137,8 +160,11 @@ public class Kayttoliittuma extends JFrame{
         normaalimaara[0] = 0;
         lastenmaara[0] = 0;
         alennusmaara[0] = 0;
+        opiskelijamaara[0] = 0;
+        elakemaara[0] = 0;
+        monnimaara[0] = 0;
         // Päivitä tekstikenttä
-        ostoskori.setText("Ostoskori:\nNormaali: " + normaalimaara[0] + "\nLasten: " + lastenmaara[0] + "\nAlennus: " + alennusmaara[0] + "\n");
+          ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
       }
     });
   }
