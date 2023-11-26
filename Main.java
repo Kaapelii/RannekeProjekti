@@ -1,6 +1,8 @@
-import Kayttoliittuma.Kayttoliittuma;
-import Tulosta.Tulosta;
 
 public class Main{
+    public static void main(String[] args) {
+        new Kayttoliittuma();
+        
 
+    }
 }
