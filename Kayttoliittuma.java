@@ -11,9 +11,9 @@ public class Kayttoliittuma extends JFrame{
         JButton btn2 = new JButton("Lasten"); 
         JButton btn3 = new JButton("Alennus");  //napit ikkunan yläosassa
  
-        JButton btn4 = new JButton("Tulosta"); 
+      //  JButton btn4 = new JButton("Tulosta"); 
         JButton btn5 = new JButton("Tulosta"); 
-        JButton btn6 = new JButton("Tulosta");     //tulosta napit pohjalla
+        JButton btn6 = new JButton("Tyhjennä ostoskori");     //tulosta napit pohjalla
 
         JTextArea txt1 = new JTextArea();
         JTextArea txt2 = new JTextArea();               //tekstikentät
@@ -23,14 +23,14 @@ public class Kayttoliittuma extends JFrame{
         JComboBox checkbox1 = new JComboBox(s1); //dropdown menu
 
         JLabel lbl1 = new JLabel("Hinta:22€(sis alv)");
-        JLabel lbl2 = new JLabel("Hinta:20€(sis alv)");
+        JLabel lbl2 = new JLabel("Hinta:26€(sis alv)");
         JLabel lbl3 = new JLabel("Hinta:20€(sis alv)");//tekstialueita 
 
 
         JLabel lbl11 = new JLabel("Huoltajan Puhelinnumero");
         JLabel lbl5 = new JLabel("Lapsen etunimi");
         JLabel lbl6 = new JLabel("Valitse alennusryhmä");
-
+        JLabel lbl19 = new JLabel("Ostoskori:");
 
 
         //tyhjät osat täyttämään grid layooutin
@@ -77,7 +77,7 @@ public class Kayttoliittuma extends JFrame{
         panel.add(lbl15);
 
         
-        panel.add(btn4); 
+        panel.add(lbl19); 
         panel.add(btn5);
         panel.add(btn6);
         
