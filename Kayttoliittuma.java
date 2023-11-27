@@ -28,8 +28,8 @@ public class Kayttoliittuma extends JFrame{
     JLabel lbl3 = new JLabel("Hinta:20€(sis alv)");//tekstialueita 
 
 
-    JLabel lbl11 = new JLabel("Huoltajan Puhelinnumero");
-    JLabel lbl5 = new JLabel("Lapsen etunimi");
+    JLabel lbl11 = new JLabel("Huoltajan Puhelinnumero:");
+    JLabel lbl5 = new JLabel("Lapsen etunimi:");
     JLabel lbl6 = new JLabel("Valitse alennusryhmä:");
     JLabel lbl19 = new JLabel("Ostoskori:");
 
@@ -126,10 +126,20 @@ public class Kayttoliittuma extends JFrame{
     btn2.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        
+        //Tarkistetaan onko huoltajan tiedot tyhjät
+        if(txt1.getText().isEmpty()==true && txt2.getText().isEmpty()==true){
+            JOptionPane.showMessageDialog(frame, "Täytä lapsen nimi ja huoltajan puhelinnumero!");
+        }else if(txt1.getText().isEmpty()==true){
+            JOptionPane.showMessageDialog(frame, "Täytä lapsen nimi!");
+        }else if (txt2.getText().isEmpty()==true){
+            JOptionPane.showMessageDialog(frame, "Täytä huoltajan puhelinnumero!");
+        }else{
         ostoskorimaara[0]++;
         lastenmaara[0]++;
         ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
+
+        }
+       
         
       }
     });
