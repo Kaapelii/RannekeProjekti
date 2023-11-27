@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class Kayttoliittuma extends JFrame{
   Kayttoliittuma(){
     JFrame frame = new JFrame("Rannekkeet"); 
@@ -115,6 +116,7 @@ public class Kayttoliittuma extends JFrame{
       @Override
       public void actionPerformed(ActionEvent e) {
         // Lisää tuote ostoskoriin
+        ostoskorimaara[0]++;
         normaalimaara[0]++;
         //Päivitä tekstialue
         ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
@@ -125,6 +127,7 @@ public class Kayttoliittuma extends JFrame{
       @Override
       public void actionPerformed(ActionEvent e) {
         
+        ostoskorimaara[0]++;
         lastenmaara[0]++;
         ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
         
@@ -136,16 +139,19 @@ public class Kayttoliittuma extends JFrame{
       public void actionPerformed(ActionEvent e) {
         String valittu = checkbox1.getSelectedItem().toString();
         if (valittu == "Opiskelija") {
+          ostoskorimaara[0]++;
           alennusmaara[0]++;
           opiskelijamaara[0]++;
           ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
         }
         else if(valittu == "Eläkeläinen") {
+          ostoskorimaara[0]++;
           alennusmaara[0]++;
           elakemaara[0]++;
           ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
         }
         else if(valittu == "Varusmies") {
+          ostoskorimaara[0]++;
           alennusmaara[0]++;
           monnimaara[0]++;
           ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
@@ -178,7 +184,8 @@ public class Kayttoliittuma extends JFrame{
           JOptionPane.showMessageDialog(frame, "Ostoskorisi on tyhjä!");
         }
         else{
-          JOptionPane.showMessageDialog(null, "Ostoskorisi on tyhjä"); //Placeolderi toistaiseksi
+          JOptionPane.showMessageDialog(frame, ostoskorimaara[0] + " ranneketta ostettu!");
+          ButtonHandler.handleButtonPress(normaalimaara[0], lastenmaara[0], opiskelijamaara[0], elakemaara[0], monnimaara[0]);
         }
       }
     });
