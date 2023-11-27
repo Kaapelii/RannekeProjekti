@@ -12,8 +12,8 @@ public class Kayttoliittuma extends JFrame{
     JButton btn3 = new JButton("Alennus");  //napit ikkunan yläosassa
  
     //  JButton btn4 = new JButton("Tulosta"); 
-    JButton btn5 = new JButton("Tulosta"); 
-    JButton btn6 = new JButton("Tyhjennä ostoskori");     //tulosta napit pohjalla
+    JButton btn5 = new JButton("Tulosta"); //tulosta nappi
+    JButton btn6 = new JButton("Tyhjennä ostoskori");     
 
     JTextArea txt1 = new JTextArea();
     JTextArea txt2 = new JTextArea();               //tekstikentät
@@ -37,13 +37,16 @@ public class Kayttoliittuma extends JFrame{
     ostoskori.setEditable(false);
     int[] normaalimaara = {0};
     int[] lastenmaara = {0};
-    
+
     //alennus alustukset
     int[] opiskelijamaara = {0};
     int[] elakemaara = {0};
     int[] monnimaara = {0};
     int[] alennusmaara = {0};
     alennusmaara[0] = opiskelijamaara[0] + elakemaara[0] + monnimaara[0];
+
+    int[] ostoskorimaara = {0}; 
+    ostoskorimaara[0] = normaalimaara[0] + lastenmaara[0] + alennusmaara[0];
     
     ostoskori.append("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
 
@@ -148,7 +151,7 @@ public class Kayttoliittuma extends JFrame{
           ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
         }
         else if (valittu == "Valitse") {
-          JOptionPane.showMessageDialog(null, "Valitse alennusryhmä");
+          JOptionPane.showMessageDialog(frame, "Valitse alennusryhmä!");
         } 
       }
     });
@@ -165,6 +168,18 @@ public class Kayttoliittuma extends JFrame{
         monnimaara[0] = 0;
         // Päivitä tekstikenttä
           ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
+      }
+    });
+
+    btn5.addActionListener(new ActionListener(){
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if(ostoskorimaara[0] == 0){
+          JOptionPane.showMessageDialog(frame, "Ostoskorisi on tyhjä!");
+        }
+        else{
+          JOptionPane.showMessageDialog(null, "Ostoskorisi on tyhjä"); //Placeolderi toistaiseksi
+        }
       }
     });
   }
