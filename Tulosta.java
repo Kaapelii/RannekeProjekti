@@ -33,7 +33,7 @@ class ReceiptHandler {
             
             Map<String, Integer> products = new HashMap<>();
             products.put("Normaali", normaali);
-            products.put("Lasten", lasten);
+            //products.put("Lasten", lasten);
             products.put("Opiskelija", opiskelija);
             products.put("Elakelainen", elakelainen);
             products.put("Varusmies", varusmies);
@@ -48,9 +48,16 @@ class ReceiptHandler {
             writer.println("Kuitti");
             writer.println("HauskaPaikkaTM");
             writer.println(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()));
-            writer.println(" ");
+            writer.println("--------------------------------");
 
             int sum = 0;
+            
+            if (lasten > 0) {
+                for (Map.Entry<String, String> entry : Kayttoliittuma.lapsilista.entrySet()) {
+                writer.println("Lasten " + prices.get("Lasten") + "€ [Nimi: " + entry.getKey() + "] [Huoltaja: " + entry.getValue() + "]");
+                sum += prices.get("Lasten");
+                }
+            }
             for (Map.Entry<String, Integer> entry : products.entrySet()) {
                 if (entry.getValue() > 0) {
                     int price = prices.get(entry.getKey());
@@ -58,7 +65,6 @@ class ReceiptHandler {
                     sum += entry.getValue() * price;
                 }
             }
-
             writer.println("--------------------------------");
             writer.println("Yht: " + sum + "€");
             writer.println("Hinnat sis alv. 24%");
