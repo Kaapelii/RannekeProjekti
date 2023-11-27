@@ -11,6 +11,10 @@ import java.io.FileNotFoundException;
 
 // ButtonHandler-luokka käyttöliittymän tulosta-napin käsittelyyn
 
+
+
+
+
 class ButtonHandler {
     public static void handleButtonPress(int normaali, int lasten, int opiskelija, int elakelainen, int varusmies) {
         ReceiptHandler.createReceipt(normaali, lasten, opiskelija, elakelainen, varusmies);
@@ -19,7 +23,11 @@ class ButtonHandler {
 
 // ReceiptHandler-luokka kuittitietojen luomiseen ja tallentamiseen
 class ReceiptHandler {
+
+
     public static void createReceipt(int normaali, int lasten, int opiskelija, int elakelainen, int varusmies) {
+        int sum = 0;
+
         try {
             String directoryPath = "Myyntitiedot/Kuittitiedot/";
             File dir = new File(directoryPath);
@@ -50,7 +58,7 @@ class ReceiptHandler {
             writer.println(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()));
             writer.println(" ");
 
-            int sum = 0;
+           
             for (Map.Entry<String, Integer> entry : products.entrySet()) {
                 if (entry.getValue() > 0) {
                     int price = prices.get(entry.getKey());
@@ -65,30 +73,48 @@ class ReceiptHandler {
 
             writer.close();
             
-            
-            //DailySalesWriter.updateDailySales(productName); 
+
+             //DailySalesWriter.updateDailySales(productName); 
             //TotalSalesWriter.updateTotalSales(productName);
+
+        TotalSalesWriter(sum);
+
+            
         } catch (IOException e) {
             e.printStackTrace();
+            
+            
+        }
+        
+    }
+   
+    private static void TotalSalesWriter(int sum) {
+            try {
+            String directoryPath = "Myyntitiedot/Kuittitiedot/";
+            File dir = new File(directoryPath);
+            if (!dir.exists()) {
+            dir.mkdirs();
+            }
+            
+
+        String totalsalesFileName = directoryPath + new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "_myyntitilanne.txt";
+         int totalsum=0;
+
+
+        totalsum=totalsum+sum;// ei täl hetkel toimi koska se ei koska totalsum ei pysy tallennettuna mihinkään ja joten se aina overridataan
+
+        PrintWriter writer2 = new PrintWriter(new FileWriter(totalsalesFileName, false));
+            writer2.println("Kokonaismyyntitilanne");
+            writer2.println(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()));
+            writer2.println("--------------------------------");
+            writer2.println("Yht: " + totalsum + "€");
+        writer2.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+            
         }
     }
+
+
 }
-
-// DailySalesWriter-luokka päivittäisen myynnin koosteen ylläpitämiseen
-class DailySalesWriter {
-    public static void updateDailySales(String productName) {
-        // Toteuta päivittäisen myynnin päivitys tarpeen mukaan
-        
-    }
-}
-
-// TotalSalesWriter-luokka kokonaismyynnin ylläpitämiseen
-class TotalSalesWriter {
-    public static void updateTotalSales(String productName) {
-        // Toteuta kokonaismyynnin päivitys tarpeen mukaan
-        
-    }
-}
-
-
 
