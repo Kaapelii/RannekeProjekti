@@ -11,10 +11,6 @@ import java.io.FileNotFoundException;
 
 // ButtonHandler-luokka käyttöliittymän tulosta-napin käsittelyyn
 
-
-
-
-
 class ButtonHandler {
     public static void handleButtonPress(int normaali, int lasten, int opiskelija, int elakelainen, int varusmies) {
         ReceiptHandler.createReceipt(normaali, lasten, opiskelija, elakelainen, varusmies);
@@ -23,11 +19,7 @@ class ButtonHandler {
 
 // ReceiptHandler-luokka kuittitietojen luomiseen ja tallentamiseen
 class ReceiptHandler {
-
-
     public static void createReceipt(int normaali, int lasten, int opiskelija, int elakelainen, int varusmies) {
-        int sum = 0;
-
         try {
             String directoryPath = "Myyntitiedot/Kuittitiedot/";
             File dir = new File(directoryPath);
@@ -41,7 +33,7 @@ class ReceiptHandler {
             
             Map<String, Integer> products = new HashMap<>();
             products.put("Normaali", normaali);
-            products.put("Lasten", lasten);
+            //products.put("Lasten", lasten);
             products.put("Opiskelija", opiskelija);
             products.put("Elakelainen", elakelainen);
             products.put("Varusmies", varusmies);
@@ -56,9 +48,16 @@ class ReceiptHandler {
             writer.println("Kuitti");
             writer.println("HauskaPaikkaTM");
             writer.println(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()));
-            writer.println(" ");
+            writer.println("--------------------------------");
 
-           
+            int sum = 0;
+            
+            if (lasten > 0) {
+                for (Map.Entry<String, String> entry : Kayttoliittuma.lapsilista.entrySet()) {
+                writer.println("Lasten " + prices.get("Lasten") + "€ [Nimi: " + entry.getKey() + "] [Huoltaja: " + entry.getValue() + "]");
+                sum += prices.get("Lasten");
+                }
+            }
             for (Map.Entry<String, Integer> entry : products.entrySet()) {
                 if (entry.getValue() > 0) {
                     int price = prices.get(entry.getKey());
@@ -66,29 +65,36 @@ class ReceiptHandler {
                     sum += entry.getValue() * price;
                 }
             }
-
             writer.println("--------------------------------");
             writer.println("Yht: " + sum + "€");
             writer.println("Hinnat sis alv. 24%");
 
             writer.close();
+            TotalSalesWriter.TotlSalesWriter(sum);
             
-
-             //DailySalesWriter.updateDailySales(productName); 
+            //DailySalesWriter.updateDailySales(productName); 
             //TotalSalesWriter.updateTotalSales(productName);
-
-        TotalSalesWriter(sum);
-
-            
         } catch (IOException e) {
             e.printStackTrace();
-            
-            
         }
+    }
+
+    
+    
+}
+/*
+// DailySalesWriter-luokka päivittäisen myynnin koosteen ylläpitämiseen
+class DailySalesWriter {
+    public static void updateDailySales(String productName) {
+        // Toteuta päivittäisen myynnin päivitys tarpeen mukaan
         
     }
-   
-    private static void TotalSalesWriter(int sum) {
+}
+*/
+// TotalSalesWriter-luokka kokonaismyynnin ylläpitämiseen
+class TotalSalesWriter {
+        static int totalsum;
+        public static void TotlSalesWriter(int sum) {
             try {
             String directoryPath = "Myyntitiedot/Kuittitiedot/";
             File dir = new File(directoryPath);
@@ -98,7 +104,7 @@ class ReceiptHandler {
             
 
         String totalsalesFileName = directoryPath + new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "_myyntitilanne.txt";
-         int totalsum=0;
+         
 
 
         totalsum=totalsum+sum;// ei täl hetkel toimi koska se ei koska totalsum ei pysy tallennettuna mihinkään ja joten se aina overridataan
@@ -114,7 +120,6 @@ class ReceiptHandler {
             
         }
     }
-
 
 }
 
