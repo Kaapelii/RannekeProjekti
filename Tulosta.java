@@ -70,7 +70,7 @@ class ReceiptHandler {
             writer.println("Hinnat sis alv. 24%");
 
             writer.close();
-            
+            TotalSalesWriter.TotlSalesWriter(sum);
             
             //DailySalesWriter.updateDailySales(productName); 
             //TotalSalesWriter.updateTotalSales(productName);
@@ -78,8 +78,11 @@ class ReceiptHandler {
             e.printStackTrace();
         }
     }
-}
 
+    
+    
+}
+/*
 // DailySalesWriter-luokka päivittäisen myynnin koosteen ylläpitämiseen
 class DailySalesWriter {
     public static void updateDailySales(String productName) {
@@ -87,14 +90,36 @@ class DailySalesWriter {
         
     }
 }
-
+*/
 // TotalSalesWriter-luokka kokonaismyynnin ylläpitämiseen
 class TotalSalesWriter {
-    public static void updateTotalSales(String productName) {
-        // Toteuta kokonaismyynnin päivitys tarpeen mukaan
-        
+        static int totalsum;
+        public static void TotlSalesWriter(int sum) {
+            try {
+            String directoryPath = "Myyntitiedot/Kuittitiedot/";
+            File dir = new File(directoryPath);
+            if (!dir.exists()) {
+            dir.mkdirs();
+            }
+            
+
+        String totalsalesFileName = directoryPath + new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "_myyntitilanne.txt";
+         
+
+
+        totalsum=totalsum+sum;// ei täl hetkel toimi koska se ei koska totalsum ei pysy tallennettuna mihinkään ja joten se aina overridataan
+
+        PrintWriter writer2 = new PrintWriter(new FileWriter(totalsalesFileName, false));
+            writer2.println("Kokonaismyyntitilanne");
+            writer2.println(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()));
+            writer2.println("--------------------------------");
+            writer2.println("Yht: " + totalsum + "€");
+        writer2.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+            
+        }
     }
+
 }
-
-
 
