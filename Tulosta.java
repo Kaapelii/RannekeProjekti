@@ -66,6 +66,7 @@ class ReceiptHandler {
                     writer.println(entry.getKey() + " x " + entry.getValue() + " " + price + "€");
                     sum += entry.getValue() * price;
                 }
+                tapahtumasumma = sum;
             }
             writer.println("--------------------------------");
             writer.println("Yht: " + sum + "€");
