@@ -192,7 +192,7 @@ class TotalSalesWriter {
         static int totalsum;
         public static void TotlSalesWriter(int sum) {
             try {
-            String directoryPath = "Myyntitiedot/Kuittitiedot/";
+            String directoryPath = "Myyntitiedot/";
             File dir = new File(directoryPath);
             if (!dir.exists()) {
             dir.mkdirs();
