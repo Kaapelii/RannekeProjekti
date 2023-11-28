@@ -2,9 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 
 public class Kayttoliittuma extends JFrame{
+  //Hashmappi johon tallennetaan asiakkaan nimi ja puhelinnumero
+  public static HashMap<String, String> lapsilista = new HashMap<String, String>();
+
   Kayttoliittuma(){
     JFrame frame = new JFrame("Rannekkeet"); 
 
@@ -28,8 +32,8 @@ public class Kayttoliittuma extends JFrame{
     JLabel lbl3 = new JLabel("Hinta:20€(sis alv)");//tekstialueita 
 
 
-    JLabel lbl11 = new JLabel("Huoltajan Puhelinnumero:");
-    JLabel lbl5 = new JLabel("Lapsen etunimi:");
+    JLabel lbl11 = new JLabel("Huoltajan Puhelinnumero");
+    JLabel lbl5 = new JLabel("Lapsen etunimi");
     JLabel lbl6 = new JLabel("Valitse alennusryhmä:");
     JLabel lbl19 = new JLabel("Ostoskori:");
 
@@ -124,23 +128,24 @@ public class Kayttoliittuma extends JFrame{
     });
 
     btn2.addActionListener(new ActionListener() {
-      @Override
       public void actionPerformed(ActionEvent e) {
-        //Tarkistetaan onko huoltajan tiedot tyhjät
-        if(txt1.getText().isEmpty()==true && txt2.getText().isEmpty()==true){
-            JOptionPane.showMessageDialog(frame, "Täytä lapsen nimi ja huoltajan puhelinnumero!");
-        }else if(txt1.getText().isEmpty()==true){
-            JOptionPane.showMessageDialog(frame, "Täytä lapsen nimi!");
-        }else if (txt2.getText().isEmpty()==true){
-            JOptionPane.showMessageDialog(frame, "Täytä huoltajan puhelinnumero!");
-        }else{
-        ostoskorimaara[0]++;
-        lastenmaara[0]++;
-        ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
-
-        }
-       
-        
+          String name = txt1.getText().trim();
+          String phoneNumber = txt2.getText().trim();
+    
+          if (name.isEmpty() && phoneNumber.matches("\\d{10}")) {
+              JOptionPane.showMessageDialog(frame, "Lisää nimi!");
+          } else if (!name.isEmpty() && !phoneNumber.matches("\\d{10}")) {
+              JOptionPane.showMessageDialog(frame, "Lisää puhelinnumero!");
+          } else if (!name.isEmpty() && phoneNumber.matches("\\d{10}")) {
+              // jos kaikki kondiksessa
+              lapsilista.put(name, phoneNumber);
+              ostoskorimaara[0]++;
+              lastenmaara[0]++;
+              ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
+          } else {
+              JOptionPane.showMessageDialog(frame, "Lisää nimi ja puhelinnumero!");
+              // This depends on how you want to show the error message
+          }
       }
     });
 
@@ -176,12 +181,14 @@ public class Kayttoliittuma extends JFrame{
       @Override
       public void actionPerformed(ActionEvent e) {
         // Tyhjennä ostoskori
+        ostoskorimaara[0] = 0;
         normaalimaara[0] = 0;
         lastenmaara[0] = 0;
         alennusmaara[0] = 0;
         opiskelijamaara[0] = 0;
         elakemaara[0] = 0;
         monnimaara[0] = 0;
+        lapsilista.clear(); //tyhjennä lapsilista
         // Päivitä tekstikenttä
           ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
       }
@@ -196,10 +203,20 @@ public class Kayttoliittuma extends JFrame{
         else{
           JOptionPane.showMessageDialog(frame, ostoskorimaara[0] + " ranneketta ostettu!");
           ButtonHandler.handleButtonPress(normaalimaara[0], lastenmaara[0], opiskelijamaara[0], elakemaara[0], monnimaara[0]);
+          ostoskorimaara[0] = 0;
+          normaalimaara[0] = 0;
+          lastenmaara[0] = 0;
+          alennusmaara[0] = 0;
+          opiskelijamaara[0] = 0;
+          elakemaara[0] = 0;
+          monnimaara[0] = 0;
+          lapsilista.clear();
+          ostoskori.setText("Normaali: " + normaalimaara[0] + " \nLasten: " + lastenmaara[0] + " \nAlennus yht: "+ alennusmaara[0] + "\nOpiskellija: "+ opiskelijamaara[0] +"\tEläkeläinen: " + elakemaara[0] + "\tVarusmies: " + monnimaara[0] + "\n");
+
         }
       }
     });
   }
   
-  
+
 }
