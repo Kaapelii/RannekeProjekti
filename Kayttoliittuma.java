@@ -9,9 +9,6 @@ public class Kayttoliittuma extends JFrame{
   //Hashmappi johon tallennetaan asiakkaan nimi ja puhelinnumero
   public static HashMap<String, String> lapsilista = new HashMap<String, String>();
 
-  /**
-   * 
-   */
   Kayttoliittuma(){
     JFrame frame = new JFrame("Rannekkeet");
 
@@ -32,9 +29,9 @@ public class Kayttoliittuma extends JFrame{
  
     JComboBox checkbox1 = new JComboBox(s1); //dropdown menu
 
-    JLabel lbl1 = new JLabel("Hinta:22€(sis alv)");
-    JLabel lbl2 = new JLabel("Hinta:26€(sis alv)");
-    JLabel lbl3 = new JLabel("Hinta:20€(sis alv)");//tekstialueita 
+    JLabel lbl1 = new JLabel("Hinta:" + Hinnasto.prices.get("Normaali") + "€(sis alv)");
+    JLabel lbl2 = new JLabel("Hinta:" + Hinnasto.prices.get("Lasten") + "€(sis alv)");
+    JLabel lbl3 = new JLabel("Hinta:" + Hinnasto.prices.get("Opiskelija") + "€(sis alv)"); //tekstialueita //tekstialueita 
 
 
     JLabel lbl11 = new JLabel("Huoltajan Puhelinnumero");

@@ -17,7 +17,7 @@ class ButtonHandler {
 class ReceiptHandler {
     
     public static Map<String, Integer> products = new HashMap<>();
-    public static Map<String, Integer> prices = new HashMap<>();
+    
 
     public static int tapahtumasumma;
     
@@ -33,19 +33,11 @@ class ReceiptHandler {
             String receiptFileName = directoryPath + new SimpleDateFormat("dd-MM-yyyy_HH.mm.ss").format(new Date()) + "_Kuitti.txt";
             PrintWriter writer = new PrintWriter(new FileWriter(receiptFileName));
             
-            
             products.put("Normaali", normaali);
             products.put("Lasten", lasten);
             products.put("Opiskelija", opiskelija);
             products.put("Elakelainen", elakelainen);
             products.put("Varusmies", varusmies);
-
-            
-            prices.put("Normaali", 22);
-            prices.put("Lasten", 20);
-            prices.put("Opiskelija", 20);
-            prices.put("Elakelainen", 20);
-            prices.put("Varusmies", 20);
             
             writer.println("Kuitti");
             writer.println("HauskaPaikkaTM");
@@ -56,13 +48,13 @@ class ReceiptHandler {
             
             if (lasten > 0) {
                 for (Map.Entry<String, String> entry : Kayttoliittuma.lapsilista.entrySet()) {
-                writer.println("Lasten " + prices.get("Lasten") + "€ [Nimi: " + entry.getKey() + "] [Huoltaja: " + entry.getValue() + "]");
-                sum += prices.get("Lasten");
+                writer.println("Lasten " + Hinnasto.prices.get("Lasten") + "€ [Nimi: " + entry.getKey() + "] [Huoltaja: " + entry.getValue() + "]");
+                sum += Hinnasto.prices.get("Lasten");
                 }
             }
             for (Map.Entry<String, Integer> entry : products.entrySet()) {
                 if (entry.getValue() > 0) {
-                    int price = prices.get(entry.getKey());
+                    int price = Hinnasto.prices.get(entry.getKey());
                     writer.println(entry.getKey() + " x " + entry.getValue() + " " + price + "€");
                     sum += entry.getValue() * price;
                 }
@@ -134,7 +126,7 @@ class DailySalesWriter {
             // Lisää kuitin sisältö tiedostoon
             for (Map.Entry<String, Integer> entry : ReceiptHandler.products.entrySet()) {
                 if (entry.getValue() > 0) {
-                    int price = ReceiptHandler.prices.get(entry.getKey());
+                    int price = Hinnasto.prices.get(entry.getKey());
                     String time = new SimpleDateFormat("HH.mm.ss").format(new Date());
 
                     // Tulosta aika ja päivän myyntisumma, jos aika on muuttunut
