@@ -9,12 +9,17 @@ public class Kayttoliittuma extends JFrame{
   //Hashmappi johon tallennetaan asiakkaan nimi ja puhelinnumero
   public static HashMap<String, String> lapsilista = new HashMap<String, String>();
 
+  /**
+   * 
+   */
   Kayttoliittuma(){
-    JFrame frame = new JFrame("Rannekkeet"); 
+    JFrame frame = new JFrame("Rannekkeet");
 
     JButton btn1 = new JButton("Normaali"); 
     JButton btn2 = new JButton("Lasten"); 
     JButton btn3 = new JButton("Alennus");  //napit ikkunan yläosassa
+    
+
  
     //  JButton btn4 = new JButton("Tulosta"); 
     JButton btn5 = new JButton("Tulosta"); //tulosta nappi
@@ -36,6 +41,7 @@ public class Kayttoliittuma extends JFrame{
     JLabel lbl5 = new JLabel("Lapsen etunimi");
     JLabel lbl6 = new JLabel("Valitse alennusryhmä:");
     JLabel lbl19 = new JLabel("Ostoskori:");
+
 
     // Ostoskori tekstilaatikko
     JTextArea ostoskori = new JTextArea(100,300);
@@ -68,7 +74,7 @@ public class Kayttoliittuma extends JFrame{
 
     JPanel panel = new JPanel(new GridLayout(8, 3, 10, 10)); 
 
-    panel.add(btn1); 
+    panel.add(btn1);
     panel.add(btn2); 
     panel.add(btn3); 
 
@@ -104,6 +110,11 @@ public class Kayttoliittuma extends JFrame{
     panel.add(lbl17);
     panel.add(lbl18);
     
+    btn1.setBackground(new Color(204, 230, 255));
+    btn2.setBackground(new Color(204, 230, 255));
+    btn3.setBackground(new Color(204, 230, 255));
+    btn6.setBackground(new Color(255, 179, 179));
+    ostoskori.setBackground(new Color(179, 255, 179));
     
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 
