@@ -18,7 +18,6 @@ class ReceiptHandler {
     
     public static Map<String, Integer> products = new HashMap<>();
     
-
     public static int tapahtumasumma;
     
     public static void createReceipt(int normaali, int lasten, int opiskelija, int elakelainen, int varusmies) {
@@ -28,7 +27,6 @@ class ReceiptHandler {
             if (!dir.exists()) {
             dir.mkdirs();
             }
-
 
             String receiptFileName = directoryPath + new SimpleDateFormat("dd-MM-yyyy_HH.mm.ss").format(new Date()) + "_Kuitti.txt";
             PrintWriter writer = new PrintWriter(new FileWriter(receiptFileName));
@@ -45,21 +43,26 @@ class ReceiptHandler {
             writer.println("--------------------------------");
 
             int sum = 0;
+            int lastenPrice = Hinnasto.prices.get("Lasten");
             
             if (lasten > 0) {
                 for (Map.Entry<String, String> entry : Kayttoliittuma.lapsilista.entrySet()) {
                 writer.println("Lasten " + Hinnasto.prices.get("Lasten") + "€ [Nimi: " + entry.getKey() + "] [Huoltaja: " + entry.getValue() + "]");
-                sum += Hinnasto.prices.get("Lasten");
+                //sum += Hinnasto.prices.get("Lasten");
                 }
+                sum += lasten * lastenPrice;
             }
             for (Map.Entry<String, Integer> entry : products.entrySet()) {
+                if (entry.getKey().equals("Lasten")) {
+                    continue;
+                }
                 if (entry.getValue() > 0) {
                     int price = Hinnasto.prices.get(entry.getKey());
                     writer.println(entry.getKey() + " x " + entry.getValue() + " " + price + "€");
                     sum += entry.getValue() * price;
                 }
-                tapahtumasumma = sum;
             }
+            tapahtumasumma = sum;
             writer.println("--------------------------------");
             writer.println("Yht: " + sum + "€");
             writer.println("Hinnat sis alv. 24%");
